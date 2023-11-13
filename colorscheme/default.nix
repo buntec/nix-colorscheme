@@ -73,7 +73,7 @@ let
       (catppuccin-reload)
     '';
 
-    emacs-extra-packages = [ pkgs.emacsPackages.catppuccin-theme ];
+    emacs-extra-packages = epkgs: [ epkgs.catppuccin-theme ];
   };
 
   catppuccin-themes = builtins.listToAttrs (map (flavor: {
@@ -173,7 +173,7 @@ in {
 
     programs.emacs.extraConfig = theme.emacs-extra-conf or "";
 
-    programs.emacs.extraPackages = theme.emacs-extra-packages or [ ];
+    programs.emacs.extraPackages = theme.emacs-extra-packages or (epkgs: [ ]);
   };
 
 }
