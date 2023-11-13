@@ -18,6 +18,10 @@
       flake = false;
     };
 
+    kanagawa = {
+      url = "github:rebelot/kanagawa.nvim";
+      flake = false;
+    };
   };
 
   outputs = inputs@{ self, ... }: {

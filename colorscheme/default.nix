@@ -67,6 +67,13 @@ let
       set -g @catppuccin_flavour '${flavor}';
     '';
 
+    emacs-extra-conf = ''
+      (load-theme 'catppuccin :no-confirm)
+      (setq catppuccin-flavor '${flavor})
+      (catppuccin-reload)
+    '';
+
+    emacs-extra-packages = [ pkgs.emacsPackages.catppuccin-theme ];
   };
 
   catppuccin-themes = builtins.listToAttrs (map (flavor: {
@@ -103,7 +110,29 @@ let
       builtins.readFile "${inputs.nightfox}/extra/nightfox/nightfox_tmux.tmux";
   };
 
-  themes = { inherit nightfox; } // tokyonight-themes // catppuccin-themes;
+  kanagawa = {
+    kitty-extra-conf =
+      builtins.readFile "${inputs.kanagawa}/extras/kanagawa.conf";
+
+    fish-init = builtins.readFile "${inputs.kanagawa}/extras/kanagawa.fish";
+
+    nvim-plugins = [ pkgs.vimPlugins.kanagawa-nvim ];
+
+    # we put the plugin config here to ensure `colorscheme(...)` is called _after_ the config
+    nvim-extra-conf = ''
+      ${builtins.readFile ./nvim/kanagawa.lua}
+      vim.cmd.colorscheme("kanagawa")
+    '';
+
+    emacs-extra-conf = ''
+      ${builtins.readFile "${inputs.kanagawa}/extras/kanagawa-theme.el"}
+      (load-theme 'kanagawa)
+    '';
+  };
+
+  themes = {
+    inherit nightfox kanagawa;
+  } // tokyonight-themes // catppuccin-themes;
 
   cfg = config.colorscheme;
 
@@ -142,6 +171,9 @@ in {
       "fish/themes".source = theme.fish-theme-src;
     };
 
+    programs.emacs.extraConfig = theme.emacs-extra-conf or "";
+
+    programs.emacs.extraPackages = theme.emacs-extra-packages or [ ];
   };
 
 }

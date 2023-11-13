@@ -16,6 +16,22 @@
         "type": "github"
       }
     },
+    "kanagawa": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1696244569,
+        "narHash": "sha256-pbLcomZHzC2JGKF4oII6AAm5q/dzQtNfFAZVNX74nB8=",
+        "owner": "rebelot",
+        "repo": "kanagawa.nvim",
+        "rev": "c19b9023842697ec92caf72cd3599f7dd7be4456",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rebelot",
+        "repo": "kanagawa.nvim",
+        "type": "github"
+      }
+    },
     "nightfox": {
       "flake": false,
       "locked": {
@@ -35,6 +51,7 @@
     "root": {
       "inputs": {
         "catppuccin-fish": "catppuccin-fish",
+        "kanagawa": "kanagawa",
         "nightfox": "nightfox",
         "tokyonight": "tokyonight"
       }
