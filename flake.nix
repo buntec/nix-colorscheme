@@ -20,9 +20,9 @@
 
   };
 
-  outputs = inputs@{ self }: {
+  outputs = inputs@{ self, ... }: {
 
-    colorscheme = (import ./colorscheme) inputs;
+    homeModules = { colorscheme = import ./colorscheme inputs; };
 
   };
 
