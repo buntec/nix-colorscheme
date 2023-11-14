@@ -9,6 +9,8 @@ let
   mkTokyoNight = style: {
     kitty-theme = "Tokyo Night ${capitalizeFirst style}";
 
+    wezterm-theme = "Tokyo Night ${capitalizeFirst style}";
+
     fish-init = builtins.readFile
       "${inputs.tokyonight}/extras/fish/tokyonight_${style}.fish";
 
@@ -35,6 +37,8 @@ let
 
   mkCatppuccin = flavor: {
     kitty-theme = "Catppuccin-${capitalizeFirst flavor}";
+
+    wezterm-theme = "Catppuccin-${capitalizeFirst flavor}";
 
     fish-init = ''
       echo "y" | fish_config theme save "Catppuccin ${capitalizeFirst flavor}";
@@ -88,6 +92,8 @@ let
     kitty-extra-conf =
       builtins.readFile "${inputs.nightfox}/extra/nightfox/nightfox_kitty.conf";
 
+    wezterm-color-scheme = "${inputs.nightfox}/extra/nightfox/nightfox_wezterm.toml";
+
     fish-init =
       builtins.readFile "${inputs.nightfox}/extra/nightfox/nightfox_fish.fish";
 
@@ -113,6 +119,9 @@ let
   kanagawa = {
     kitty-extra-conf =
       builtins.readFile "${inputs.kanagawa}/extras/kanagawa.conf";
+      
+    wezterm-extra-conf =
+      builtins.readFile "${inputs.kanagawa}/extras/wezterm.lua";
 
     fish-init = builtins.readFile "${inputs.kanagawa}/extras/kanagawa.fish";
 
@@ -127,8 +136,9 @@ let
     emacs-extra-packages = epkgs: [ epkgs.autothemer epkgs.kanagawa-theme ];
 
     emacs-extra-conf = ''
-      (load-theme 'kanagawa)
+      (load-theme 'kanagawa t)
     '';
+
   };
 
   themes = {
@@ -155,6 +165,12 @@ in {
     programs.kitty.theme = mkIf (hasAttr "kitty-theme" theme) theme.kitty-theme;
 
     programs.kitty.extraConfig = theme.kitty-extra-conf or "";
+
+    programs.wezterm.theme = mkIf (hasAttr "wezterm-theme" theme) theme.wezterm-theme;
+    
+    programs.wezterm.extraConfig = theme.wezterm-extra-conf or "";
+
+    programs.wezterm.colorSchemes = theme.wezterm-color-schemes or "";
 
     programs.tmux.extraConfig = theme.tmux-extra-conf or "";
 
