@@ -124,6 +124,8 @@ let
       vim.cmd.colorscheme("kanagawa")
     '';
 
+    emacs-extra-packages = ekpgs: [ epkgs.autothemer ];
+
     emacs-extra-conf = ''
       ${builtins.readFile "${inputs.kanagawa}/extras/kanagawa-theme.el"}
       (load-theme 'kanagawa)
