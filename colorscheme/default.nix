@@ -10,7 +10,11 @@ let
     kitty-theme = "Tokyo Night ${capitalizeFirst style}";
 
     wezterm-extra-conf = ''
-      theme = "Tokyo Night ${capitalizeFirst style}"
+      local config = { }
+      
+      config.theme = "Tokyo Night ${capitalizeFirst style}"
+
+      return config;
     '';
 
     fish-init = builtins.readFile
@@ -40,9 +44,8 @@ let
   mkCatppuccin = flavor: {
     kitty-theme = "Catppuccin-${capitalizeFirst flavor}";
 
-    wezterm-extra-conf = ''
-      theme =  "Catppuccin-${capitalizeFirst flavor}"
-    '';
+    wezterm-color-schemes =
+      "${inputs.catppuccin-wezterm}/dist/catppuccin-${flavor}.toml";
 
     fish-init = ''
       echo "y" | fish_config theme save "Catppuccin ${capitalizeFirst flavor}";
@@ -96,7 +99,7 @@ let
     kitty-extra-conf =
       builtins.readFile "${inputs.nightfox}/extra/nightfox/nightfox_kitty.conf";
 
-    wezterm-color-scheme =
+    wezterm-color-schemes =
       "${inputs.nightfox}/extra/nightfox/nightfox_wezterm.toml";
 
     fish-init =

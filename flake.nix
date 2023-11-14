@@ -17,11 +17,17 @@
       url = "github:catppuccin/fish";
       flake = false;
     };
+    
+    catppuccin-wezterm = {
+      url = "github:catppuccin/wezterm";
+      flake = false;
+    };
 
     kanagawa = {
       url = "github:rebelot/kanagawa.nvim";
       flake = false;
     };
+
   };
 
   outputs = inputs@{ self, ... }: {
