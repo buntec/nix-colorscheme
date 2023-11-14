@@ -173,7 +173,7 @@ in {
 
     programs.wezterm.extraConfig = theme.wezterm-extra-conf or "";
 
-    programs.wezterm.colorSchemes = theme.wezterm-color-schemes or "";
+    programs.wezterm.colorSchemes = theme.wezterm-color-schemes or { };
 
     programs.tmux.extraConfig = theme.tmux-extra-conf or "";
 
