@@ -44,8 +44,8 @@ let
   mkCatppuccin = flavor: {
     kitty-theme = "Catppuccin-${capitalizeFirst flavor}";
 
-    wezterm-color-schemes = builtins.readFile
-      "${inputs.catppuccin-wezterm}/dist/catppuccin-${flavor}.toml";
+    wezterm-color-schemes = builtins.fromTOML (builtins.readFile
+      "${inputs.catppuccin-wezterm}/dist/catppuccin-${flavor}.toml");
 
     fish-init = ''
       echo "y" | fish_config theme save "Catppuccin ${capitalizeFirst flavor}";
