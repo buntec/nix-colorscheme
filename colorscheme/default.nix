@@ -11,7 +11,7 @@ let
 
     wezterm-extra-conf = ''
       local config = { }
-      
+
       config.theme = "Tokyo Night ${capitalizeFirst style}"
 
       return config;
@@ -44,7 +44,7 @@ let
   mkCatppuccin = flavor: {
     kitty-theme = "Catppuccin-${capitalizeFirst flavor}";
 
-    wezterm-color-schemes =
+    wezterm-color-schemes = builtins.readFile
       "${inputs.catppuccin-wezterm}/dist/catppuccin-${flavor}.toml";
 
     fish-init = ''
