@@ -16,6 +16,22 @@
         "type": "github"
       }
     },
+    "doom-one": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1709833111,
+        "narHash": "sha256-wm95c8Mo1TXl39xr+4gTQzBvk8oXT2RTjon5IIpAKEc=",
+        "owner": "NTBBloodbath",
+        "repo": "doom-one.nvim",
+        "rev": "76595eec15896a5da7f4e39ceeded6ffb0f4dc38",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NTBBloodbath",
+        "repo": "doom-one.nvim",
+        "type": "github"
+      }
+    },
     "kanagawa": {
       "flake": false,
       "locked": {
