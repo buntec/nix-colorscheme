@@ -22,6 +22,11 @@
       url = "github:rebelot/kanagawa.nvim";
       flake = false;
     };
+
+    doom-one = {
+      url = "github:NTBBloodbath/doom-one.nvim";
+      flake = false;
+    };
   };
 
   outputs = inputs@{ self, ... }: {

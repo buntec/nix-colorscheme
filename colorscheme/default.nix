@@ -130,9 +130,30 @@ let
       (load-theme 'kanagawa)
     '';
   };
+  
+  doom-one = {
+    kitty-extra-conf =
+      builtins.readFile "${inputs.doom-one}/extras/kitty-dark.conf";
+
+    nvim-plugins = [ pkgs.vimPlugins.doom-one-nvim ];
+
+    # we put the plugin config here to ensure `colorscheme(...)` is called _after_ the config
+    nvim-extra-conf = ''
+      ${builtins.readFile ./nvim/doom-one.lua}
+      vim.cmd.colorscheme("doom-one")
+    '';
+
+    # TODO emacs
+
+    vscode-extensions = [ pkgs.vscode-marketplace.jaredkent.doom-vscode ];
+
+    vscode-user-settings = ''
+      "workbench.colorTheme" = "Doom One";
+    '';
+  };
 
   themes = {
-    inherit nightfox kanagawa;
+    inherit nightfox kanagawa doom-one;
   } // tokyonight-themes // catppuccin-themes;
 
   cfg = config.colorscheme;
