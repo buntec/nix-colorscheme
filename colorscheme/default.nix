@@ -150,10 +150,9 @@ let
       (load-theme 'kanagawa)
     '';
   };
-  
+
   doom-one = {
-    kitty-extra-conf =
-      builtins.readFile "${inputs.doom-one}/extras/kitty-dark.conf";
+    kitty-extra-conf = builtins.readFile "${inputs.doom-one}/extras/kitty-dark.conf";
 
     nvim-plugins = [ pkgs.vimPlugins.doom-one-nvim ];
 
@@ -190,7 +189,12 @@ let
   };
 
   themes = {
-    inherit nightfox kanagawa doom-one kauz;
+    inherit
+      nightfox
+      kanagawa
+      doom-one
+      kauz
+      ;
   } // tokyonight-themes // catppuccin-themes;
 
   cfg = config.colorscheme;
