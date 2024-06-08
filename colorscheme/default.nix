@@ -152,8 +152,24 @@ let
     '';
   };
 
+  kauz = {
+    kitty-extra-conf = ''
+        include ${inputs.kauz.packages.${pkgs.system}.kauz-kitty}/kauz.conf
+      '';
+    nvim-plugins = [ inputs.kauz.packages.${pkgs.system}.kauz-nvim ];
+    nvim-extra-conf = ''
+      vim.cmd.colorscheme("kauz")
+    '';
+    fish-plugins = [{
+      name = "kauz-fish";
+      inherit (inputs.kauz.packages.${pkgs.system}.kauz-fish) src;
+    }];
+    tmux-extra-conf = 
+        builtins.readFile "${inputs.kauz.packages.${pkgs.system}.kauz-tmux}/kauz.tmux";
+  };
+
   themes = {
-    inherit nightfox kanagawa doom-one;
+    inherit nightfox kanagawa doom-one kauz;
   } // tokyonight-themes // catppuccin-themes;
 
   cfg = config.colorscheme;
@@ -187,7 +203,7 @@ in {
 
     programs.neovim.plugins = theme.nvim-plugins or [ ];
 
-    programs.neovim.extraLuaConfig = theme.nvim-extra-conf or [ ];
+    programs.neovim.extraLuaConfig = theme.nvim-extra-conf or "";
 
     xdg.configFile = mkIf (hasAttr "fish-theme-src" theme) {
       "fish/themes".source = theme.fish-theme-src;

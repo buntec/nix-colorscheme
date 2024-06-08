@@ -27,6 +27,10 @@
       url = "github:NTBBloodbath/doom-one.nvim";
       flake = false;
     };
+    
+    kauz = {
+      url = "github:buntec/kauz";
+    };
   };
 
   outputs = inputs@{ self, ... }: {
