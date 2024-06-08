@@ -1,16 +1,19 @@
 inputs:
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
 let
-  capitalizeFirst = s:
-    lib.toUpper (builtins.substring 0 1 s)
-    + builtins.substring 1 (lib.stringLength s) s;
+  capitalizeFirst =
+    s: lib.toUpper (builtins.substring 0 1 s) + builtins.substring 1 (lib.stringLength s) s;
 
   mkTokyoNight = style: {
     kitty-theme = "Tokyo Night ${capitalizeFirst style}";
 
-    fish-init = builtins.readFile
-      "${inputs.tokyonight}/extras/fish/tokyonight_${style}.fish";
+    fish-init = builtins.readFile "${inputs.tokyonight}/extras/fish/tokyonight_${style}.fish";
 
     fish-theme-src = "${inputs.tokyonight}/extras/fish_themes";
 
@@ -23,15 +26,22 @@ let
       vim.cmd.colorscheme("tokyonight")
     '';
 
-    tmux-extra-conf = builtins.readFile
-      "${inputs.tokyonight}/extras/tmux/tokyonight_${style}.tmux";
-
+    tmux-extra-conf = builtins.readFile "${inputs.tokyonight}/extras/tmux/tokyonight_${style}.tmux";
   };
 
-  tokyonight-themes = builtins.listToAttrs (map (style: {
-    name = "tokyonight-${style}";
-    value = mkTokyoNight style;
-  }) [ "storm" "moon" "day" "night" ]);
+  tokyonight-themes = builtins.listToAttrs (
+    map
+      (style: {
+        name = "tokyonight-${style}";
+        value = mkTokyoNight style;
+      })
+      [
+        "storm"
+        "moon"
+        "day"
+        "night"
+      ]
+  );
 
   mkCatppuccin = flavor: {
     kitty-theme = "Catppuccin-${capitalizeFirst flavor}";
@@ -42,15 +52,17 @@ let
 
     fish-theme-src = "${inputs.catppuccin-fish}/themes";
 
-    fish-plugins = [{
-      name = "catppuccin";
-      src = pkgs.fetchFromGitHub {
-        owner = "catppuccin";
-        repo = "fish";
-        rev = "0ce27b518e8ead555dec34dd8be3df5bd75cff8e";
-        sha256 = "sha256-Dc/zdxfzAUM5NX8PxzfljRbYvO9f9syuLO8yBr+R3qg=";
-      };
-    }];
+    fish-plugins = [
+      {
+        name = "catppuccin";
+        src = pkgs.fetchFromGitHub {
+          owner = "catppuccin";
+          repo = "fish";
+          rev = "0ce27b518e8ead555dec34dd8be3df5bd75cff8e";
+          sha256 = "sha256-Dc/zdxfzAUM5NX8PxzfljRbYvO9f9syuLO8yBr+R3qg=";
+        };
+      }
+    ];
 
     nvim-plugins = [ pkgs.vimPlugins.catppuccin-nvim ];
 
@@ -76,20 +88,27 @@ let
     emacs-extra-packages = epkgs: [ epkgs.catppuccin-theme ];
   };
 
-  catppuccin-themes = builtins.listToAttrs (map (flavor: {
-    name = "catppuccin-${flavor}";
-    value = mkCatppuccin flavor;
-  }) [ "frappe" "mocha" "macchiato" "latte" ]);
+  catppuccin-themes = builtins.listToAttrs (
+    map
+      (flavor: {
+        name = "catppuccin-${flavor}";
+        value = mkCatppuccin flavor;
+      })
+      [
+        "frappe"
+        "mocha"
+        "macchiato"
+        "latte"
+      ]
+  );
 
   nightfox = {
     # nightfox is built into kitty, but we prefer the upstream version
     # kitty-theme = "Nightfox";
 
-    kitty-extra-conf =
-      builtins.readFile "${inputs.nightfox}/extra/nightfox/nightfox_kitty.conf";
+    kitty-extra-conf = builtins.readFile "${inputs.nightfox}/extra/nightfox/nightfox_kitty.conf";
 
-    fish-init =
-      builtins.readFile "${inputs.nightfox}/extra/nightfox/nightfox_fish.fish";
+    fish-init = builtins.readFile "${inputs.nightfox}/extra/nightfox/nightfox_fish.fish";
 
     nvim-plugins = [ pkgs.vimPlugins.nightfox-nvim ];
 
@@ -106,13 +125,11 @@ let
       vim.cmd.colorscheme("nightfox")
     '';
 
-    tmux-extra-conf =
-      builtins.readFile "${inputs.nightfox}/extra/nightfox/nightfox_tmux.tmux";
+    tmux-extra-conf = builtins.readFile "${inputs.nightfox}/extra/nightfox/nightfox_tmux.tmux";
   };
 
   kanagawa = {
-    kitty-extra-conf =
-      builtins.readFile "${inputs.kanagawa}/extras/kanagawa.conf";
+    kitty-extra-conf = builtins.readFile "${inputs.kanagawa}/extras/kanagawa.conf";
 
     fish-init = builtins.readFile "${inputs.kanagawa}/extras/kanagawa.fish";
 
@@ -124,7 +141,10 @@ let
       vim.cmd.colorscheme("kanagawa")
     '';
 
-    emacs-extra-packages = epkgs: [ epkgs.autothemer epkgs.kanagawa-theme ];
+    emacs-extra-packages = epkgs: [
+      epkgs.autothemer
+      epkgs.kanagawa-theme
+    ];
 
     emacs-extra-conf = ''
       (load-theme 'kanagawa)
@@ -154,18 +174,19 @@ let
 
   kauz = {
     kitty-extra-conf = ''
-        include ${inputs.kauz.packages.${pkgs.system}.kauz-kitty}/kauz.conf
-      '';
+      include ${inputs.kauz.packages.${pkgs.system}.kauz-kitty}/kauz.conf
+    '';
     nvim-plugins = [ inputs.kauz.packages.${pkgs.system}.kauz-nvim ];
     nvim-extra-conf = ''
       vim.cmd.colorscheme("kauz")
     '';
-    fish-plugins = [{
-      name = "kauz-fish";
-      inherit (inputs.kauz.packages.${pkgs.system}.kauz-fish) src;
-    }];
-    tmux-extra-conf = 
-        builtins.readFile "${inputs.kauz.packages.${pkgs.system}.kauz-tmux}/kauz.tmux";
+    fish-plugins = [
+      {
+        name = "kauz-fish";
+        inherit (inputs.kauz.packages.${pkgs.system}.kauz-fish) src;
+      }
+    ];
+    tmux-extra-conf = builtins.readFile "${inputs.kauz.packages.${pkgs.system}.kauz-tmux}/kauz.tmux";
   };
 
   themes = {
@@ -175,12 +196,11 @@ let
   cfg = config.colorscheme;
 
   theme = themes.${cfg.name};
-
-in {
+in
+{
 
   options.colorscheme = {
-    enable =
-      mkEnableOption "a global colorscheme for kitty, fish, tmux and nvim";
+    enable = mkEnableOption "a global colorscheme for kitty, fish, tmux and nvim";
     name = mkOption {
       type = types.enum (builtins.attrNames themes);
       default = "tokyonight-storm";
@@ -213,5 +233,4 @@ in {
 
     programs.emacs.extraPackages = theme.emacs-extra-packages or (epkgs: [ ]);
   };
-
 }
