@@ -48,6 +48,24 @@
         "type": "github"
       }
     },
+    "kauz": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1704475005,
+        "narHash": "sha256-TcMv7e+6dm3soVXFaOyS097n4LA8vJ1jQJOWkpGWK14=",
+        "owner": "buntec",
+        "repo": "kauz",
+        "rev": "0787e60bfc26996b3c943f3ac631b35336ed43e1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "buntec",
+        "repo": "kauz",
+        "type": "github"
+      }
+    },
     "nightfox": {
       "flake": false,
       "locked": {
@@ -64,10 +82,25 @@
         "type": "github"
       }
     },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1700108881,
+        "narHash": "sha256-+Lqybl8kj0+nD/IlAWPPG/RDTa47gff9nbei0u7BntE=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "7414e9ee0b3e9903c24d3379f577a417f0aae5f1",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
     "root": {
       "inputs": {
         "catppuccin-fish": "catppuccin-fish",
         "kanagawa": "kanagawa",
+        "kauz": "kauz",
         "nightfox": "nightfox",
         "tokyonight": "tokyonight"
       }
