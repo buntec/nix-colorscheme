@@ -213,7 +213,7 @@ in
 
   config = mkIf cfg.enable {
 
-    programs.kitty.theme = mkIf (hasAttr "kitty-theme" theme) theme.kitty-theme;
+    programs.kitty.themeFile = mkIf (hasAttr "kitty-theme" theme) theme.kitty-theme;
 
     programs.kitty.extraConfig = theme.kitty-extra-conf or "";
 
